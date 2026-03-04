@@ -66,9 +66,16 @@ const SpinWheel = () => {
         setShowConfetti(false);
     };
 
-    const truncateText = (text, maxLength = window.innerWidth < 640 ? 16 : 22) => {
+    const truncateText = (text, maxLength = window.innerWidth < 640 ? 18 : 24) => {
         if (text.length <= maxLength) return text;
         return text.slice(0, maxLength) + "...";
+    };
+
+    const getFontSize = () => {
+        if (window.innerWidth < 480) return 18;
+        if (window.innerWidth < 768) return 20;
+        if (window.innerWidth < 1024) return 22;
+        return 24;
     };
 
     const createSegments = () => {
@@ -100,10 +107,11 @@ const SpinWheel = () => {
 
                     <g transform={`translate(${center}, ${center}) rotate(${rotateDeg})`}>
                         <text
-                            x={180} // moved outward from center
+                            x={200}
                             y={0}
                             fill="white"
-                            className="text-[14px] sm:text-[16px] md:text-[20px] lg:text-[24px] font-[800] sm:font-[900] drop-shadow-md"
+                            fontSize={getFontSize()}
+                            fontWeight="900"
                             textAnchor="middle"
                             dominantBaseline="middle"
                         >
@@ -124,17 +132,17 @@ const SpinWheel = () => {
 
             <div className="text-center w-full max-w-7xl mx-auto px-4">
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 mb-6 lg:mb-8 drop-shadow-lg tracking-tight mt-4 whitespace-pre-wrap">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 mb-10 lg:mb-12 drop-shadow-lg tracking-tight whitespace-pre-wrap">
                     ⚡ Punishment Allocator
                 </h1>
 
                 {!hasSpun ? (
                     <div className="flex flex-col items-center justify-center">
 
-                        <div className="relative flex justify-center items-center w-full max-w-[95vw] sm:max-w-[80vw] lg:max-w-[800px] mb-6 lg:mb-12">
+                        <div className="relative flex justify-center items-center w-full max-w-[95vw] sm:max-w-[80vw] lg:max-w-[800px] mt-6 mb-6 lg:mb-12">
 
                             {/* Pointer */}
-                            <div className="absolute -top-10 z-20">
+                            <div className="absolute -top-14 z-20">
                                 <div className="w-0 h-0 border-l-[30px] border-r-[30px] border-b-[50px] border-l-transparent border-r-transparent border-b-cyan-400 drop-shadow-[0_0_20px_#22d3ee]" />
                             </div>
 
@@ -157,6 +165,7 @@ const SpinWheel = () => {
                                     strokeWidth="6"
                                 />
                             </motion.svg>
+
                         </div>
 
                         <motion.button
@@ -202,6 +211,7 @@ const SpinWheel = () => {
                         </motion.div>
                     </AnimatePresence>
                 )}
+
             </div>
         </div>
     );
